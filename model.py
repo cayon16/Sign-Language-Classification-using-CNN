@@ -41,7 +41,7 @@ images_2, labels_2 = load_data(train_data_directory_2)
 
 
 
-ROOT_PATH_TEST = "C:/Users/ADMIN/Desktop/python code/sign_language/testt"
+ROOT_PATH_TEST = "C:/Users/ADMIN/Desktop/python code/sign_language/dataa"
 test_data_directory = os.path.join(ROOT_PATH_TEST, "test")
 images_test, labels_test = load_data(test_data_directory)
 
