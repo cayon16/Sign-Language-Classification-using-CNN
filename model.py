@@ -1,9 +1,8 @@
-from skimage import transform
-from skimage import data
+
 import os
 import cv2
 import numpy as np
-from skimage.color import rgb2gray
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -102,7 +101,7 @@ plt.show()
 plt.imshow(x_test[1500], interpolation='none')
 plt.title(f'label: {y_test[1500]}')
 plt.show()
-
+'''
 # distribution of train and test set 
 plt.title('distribution of train set')
 sns.countplot(x = y_train)
@@ -112,7 +111,7 @@ plt.title('distribution of test set')
 sns.countplot(x = y_test)
 plt.show()
 
-'''
+
 
 # scaling
 x_train = x_train / 255.0
