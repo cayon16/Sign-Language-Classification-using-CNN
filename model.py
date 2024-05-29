@@ -34,10 +34,14 @@ ROOT_PATH_1 = "C:/Users/ADMIN/Desktop/python code/sign_language/dataa/asl_alphab
 train_data_directory_1 = os.path.join(ROOT_PATH_1, "asl_alphabet_train")
 images_1, labels_1 = load_data(train_data_directory_1)
 
+x_train_1, x_test_1, y_train_1, y_test_1 = train_test_split(images_1, labels_1, test_size=0.1, random_state=42)
+
 ROOT_PATH_2 = "C:/Users/ADMIN/Desktop/python code/sign_language/dataa"
 train_data_directory_2 = os.path.join(ROOT_PATH_2, "train")
 images_2, labels_2 = load_data(train_data_directory_2) 
 
+x_train_2 = np.array(images_2) 
+y_train_2 = np.array(labels_2)
 
 
 
@@ -46,11 +50,14 @@ test_data_directory = os.path.join(ROOT_PATH_TEST, "test")
 images_test, labels_test = load_data(test_data_directory)
 
 # train set combine
-x_train = np.concatenate((images_1, images_2), axis=0)
-y_train = np.concatenate((labels_1, labels_2), axis=0)
+x_train = np.concatenate((x_train_1,x_train_2), axis=0)
+y_train = np.concatenate((y_train_1,y_train_2), axis=0)
 
-x_test = np.array(images_test)
-y_test = np.array(labels_test)
+x_test_2 = np.array(images_test)
+y_test_2 = np.array(labels_test)
+                    
+x_test = np.concatenate((x_test_2,x_test_1),axis = 0)
+y_test = np.concatenate((y_test_2,y_test_1),axis = 0)
 
 y = y_test 
 
@@ -62,7 +69,7 @@ print("Label Array:", [chr(X + ord('A')) for X in set(y_train)])
 print("The shape of train set: ", x_train.shape, y_train.shape)
 print("The shape of test set: ", x_test.shape, y_test.shape)
 
-
+'''
 # show some images in data 
 plt.imshow(x_train[0], interpolation='none')
 plt.title(f'label: {y_train[0]}')
@@ -105,7 +112,7 @@ plt.title('distribution of test set')
 sns.countplot(x = y_test)
 plt.show()
 
-
+'''
 
 # scaling
 x_train = x_train / 255.0
@@ -140,7 +147,7 @@ datagen.fit(x_train)
 print(x_train.size, y_train.size)
 print(x_test.size, y_test.size)
 
-'''
+
 # MODEL BUILDING 
 my_model = Sequential()
 
@@ -205,7 +212,7 @@ my_model.load_weights(checkpoint_path)
 test_loss, test_accuracy = my_model.evaluate(x_test, y_test)
 print('MODEL ACCURACY = {}%'.format(test_accuracy * 100))
 print('MODEL LOSS = {}%'.format(test_loss))
-my_model.save('new_model.h5')
+my_model.save('gray_model.h5')
 
 
 # Analysis results 
@@ -252,4 +259,3 @@ cm = pd.DataFrame(cm, index=[i for i in range(25) if i != 9], columns=[i for i i
 plt.figure(figsize=(15, 15))
 sns.heatmap(cm, cmap="Blues", linecolor='black', linewidth=1, annot=True, fmt='')
 plt.show()
-'''
