@@ -33,30 +33,29 @@ ROOT_PATH_1 = "C:/Users/ADMIN/Desktop/python code/sign_language/dataa/asl_alphab
 train_data_directory_1 = os.path.join(ROOT_PATH_1, "asl_alphabet_train")
 images_1, labels_1 = load_data(train_data_directory_1)
 
-x_train_1, x_test_1, y_train_1, y_test_1 = train_test_split(images_1, labels_1, test_size=0.1, random_state=42)
-
 ROOT_PATH_2 = "C:/Users/ADMIN/Desktop/python code/sign_language/dataa"
 train_data_directory_2 = os.path.join(ROOT_PATH_2, "train")
-images_2, labels_2 = load_data(train_data_directory_2) 
+images_2, labels_2 = load_data(train_data_directory_2)
 
-x_train_2 = np.array(images_2) 
-y_train_2 = np.array(labels_2)
+ROOT_PATH_3 = "C:/Users/ADMIN/Desktop/python code/sign_language/dataa"
+train_data_directory_3 = os.path.join(ROOT_PATH_3, "train_2")
+images_3, labels_3 = load_data(train_data_directory_3)
 
+ROOT_PATH_TEST_1 = "C:/Users/ADMIN/Desktop/python code/sign_language/dataa"
+test_data_directory_1 = os.path.join(ROOT_PATH_TEST_1, "test")
+images_test_1, labels_test_1 = load_data(test_data_directory_1)
 
+# Split train data 2 and 3 into train and test
+x_train_2, x_test_2, y_train_2, y_test_2 = train_test_split(images_2, labels_2, test_size=0.3, random_state=42)
+x_train_3, x_test_3, y_train_3, y_test_3 = train_test_split(images_3, labels_3, test_size=0.3, random_state=42)
 
-ROOT_PATH_TEST = "C:/Users/ADMIN/Desktop/python code/sign_language/dataa"
-test_data_directory = os.path.join(ROOT_PATH_TEST, "test")
-images_test, labels_test = load_data(test_data_directory)
+# Combine train sets
+x_train = np.concatenate((images_1, x_train_2, x_train_3), axis=0)
+y_train = np.concatenate((labels_1, y_train_2, y_train_3), axis=0)
 
-# train set combine
-x_train = np.concatenate((x_train_1,x_train_2), axis=0)
-y_train = np.concatenate((y_train_1,y_train_2), axis=0)
-
-x_test_2 = np.array(images_test)
-y_test_2 = np.array(labels_test)
-                    
-x_test = np.concatenate((x_test_2,x_test_1),axis = 0)
-y_test = np.concatenate((y_test_2,y_test_1),axis = 0)
+# Combine test sets
+x_test = np.concatenate((x_test_2, x_test_3, images_test_1), axis=0)
+y_test = np.concatenate((y_test_2, y_test_3, labels_test_1), axis=0)
 
 y = y_test 
 
@@ -78,28 +77,28 @@ plt.imshow(x_train[32145], interpolation='none')
 plt.title(f'label: {y_train[32145]}')
 plt.show()
 
-plt.imshow(x_train[3245], interpolation='none')
-plt.title(f'label: {y_train[3245]}')
+plt.imshow(x_train[60000], interpolation='none')
+plt.title(f'label: {y_train[60000]}')
 plt.show()
 
 plt.imshow(x_train[80000], interpolation='none')
 plt.title(f'label: {y_train[80000]}')
 plt.show()
 
-plt.imshow(x_train[1500], interpolation='none')
-plt.title(f'label: {y_train[1500]}')
+plt.imshow(x_train[90000], interpolation='none')
+plt.title(f'label: {y_train[90000]}')
 plt.show()
 
 plt.imshow(x_test[0], interpolation='none')
 plt.title(f'label: {y_test[0]}')
 plt.show()
 
-plt.imshow(x_test[315], interpolation='none')
-plt.title(f'label: {y_test[315]}')
+plt.imshow(x_test[5000], interpolation='none')
+plt.title(f'label: {y_test[5000]}')
 plt.show()
 
-plt.imshow(x_test[1500], interpolation='none')
-plt.title(f'label: {y_test[1500]}')
+plt.imshow(x_test[20000], interpolation='none')
+plt.title(f'label: {y_test[20000]}')
 plt.show()
 '''
 # distribution of train and test set 
