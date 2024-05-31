@@ -1,7 +1,7 @@
 # VuQuocDung20225488
 Sign Language Classification using CNN 
 This is our source code, including four main files. 
-Firstly, due to the large size of our training and testing data(more than 2GB), we uploaded it to these 2 links:
+Firstly, due to the large size of our training and testing data(more than 2GB), we uploaded it to these 2 zip links:
 - "https://drive.google.com/file/d/1FOj1n1BoU1U9MDuT0rjww6xI76ON6GlV/view?usp=sharing", this one is for train and validity dataset
 - "https://drive.google.com/drive/folders/1gZ7esm-I1as9vo-rbCKwsFHITHo7z_XV?usp=sharing", this one is our testing dataset.
 
