@@ -54,10 +54,10 @@ x_train = np.concatenate((images_1, x_train_2, x_train_3), axis=0)
 y_train = np.concatenate((labels_1, y_train_2, y_train_3), axis=0)
 
 # Combine test sets
-x_test = np.concatenate((x_test_2, x_test_3, images_test_1), axis=0)
-y_test = np.concatenate((y_test_2, y_test_3, labels_test_1), axis=0)
+x_valid = np.concatenate((x_test_2, x_test_3, images_test_1), axis=0)
+y_valid = np.concatenate((y_test_2, y_test_3, labels_test_1), axis=0)
 
-y = y_test 
+y = y_valid
 
 # test for number of classes on train set 
 print("Total number of classes:", len(set(y_train)))
@@ -65,7 +65,7 @@ print("Label Array:", [chr(X + ord('A')) for X in set(y_train)])
 
 # test for shape of train and test set 
 print("The shape of train set: ", x_train.shape, y_train.shape)
-print("The shape of test set: ", x_test.shape, y_test.shape)
+print("The shape of test set: ", x_valid.shape, y_valid.shape)
 
 '''
 # show some images in data 
@@ -107,26 +107,26 @@ sns.countplot(x = y_train)
 plt.show()
 
 plt.title('distribution of test set') 
-sns.countplot(x = y_test)
+sns.countplot(x = y_valid)
 plt.show()
 
 
 
 # scaling
 x_train = x_train / 255.0
-x_test = x_test / 255.0
+x_test = x_valid / 255.0
 
 
 # One-hot encoding
 from sklearn.preprocessing import LabelBinarizer
 label_binarizer = LabelBinarizer()
 y_train = label_binarizer.fit_transform(y_train)
-y_test = label_binarizer.transform(y_test)
+y_test = label_binarizer.transform(y_valid)
 
 
 # reshape the data before training model
 x_train = x_train.reshape(-1, 64, 64, 3)
-x_test = x_test.reshape(-1, 64, 64, 3)
+x_valid = x_valid.reshape(-1, 64, 64, 3)
 
 
 # Data augmentation
@@ -143,7 +143,7 @@ datagen = ImageDataGenerator(
 datagen.fit(x_train)
 
 print(x_train.size, y_train.size)
-print(x_test.size, y_test.size)
+print(x_valid.size, y_valid.size)
 
 
 # MODEL BUILDING 
@@ -200,14 +200,14 @@ checkpoint = ModelCheckpoint(checkpoint_path,
 # use checkpoint to have best val accuracy 
 history = my_model.fit(datagen.flow(x_train, y_train, batch_size=512), 
                         epochs=20, 
-                        validation_data=(x_test, y_test), 
+                        validation_data=(x_valid, y_valid), 
                         shuffle=True,
                         callbacks=[checkpoint])
 
 
 # load checkpoint and print the information of model 
 my_model.load_weights(checkpoint_path)
-test_loss, test_accuracy = my_model.evaluate(x_test, y_test)
+test_loss, test_accuracy = my_model.evaluate(x_valid, y_valid)
 print('MODEL ACCURACY = {}%'.format(test_accuracy * 100))
 print('MODEL LOSS = {}%'.format(test_loss))
 my_model.save('gray_model.h5')
@@ -245,7 +245,7 @@ plt.show()
 # Predict on test set 
 predictions = my_model.predict(x_test)
 y_pred_classes = label_binarizer.inverse_transform(predictions)
-y_test_classes = label_binarizer.inverse_transform(y_test)
+y_test_classes = label_binarizer.inverse_transform(y_valid)
 
 # report of model
 classes = ["Class " + str(i) for i in range(25) if i != 9]
