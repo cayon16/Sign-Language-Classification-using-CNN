@@ -17,4 +17,4 @@ After running the model, it is saved in "gray_model.h5" file.
 
 "test_for_newdata.py" is used to return model's accuracy for a total new dataset, you only have to change the directory of the folder you want to predict on the code by copy the folder path to "ROOT_PATH_TEST"(line 24).
 
-Caution: You must save your data images in folders name A, B, C,etc. and put those folders in "data" folder, please check the test dataset as an example.
+Caution: You must save your data images in folders name A, B, C, etc. and put those folders in "data" folder, please check the test dataset above as an example.
